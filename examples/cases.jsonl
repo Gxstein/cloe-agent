@@ -1,0 +1,2 @@
+{"id":"order-keyword","prompt":"Reply with the word order.","expected_contains":["order"]}
+{"id":"support-greeting","prompt":"Reply with a short support greeting.","expected_contains":["support"]}
