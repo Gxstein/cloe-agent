@@ -35,6 +35,11 @@ Por exemplo, para um e-mail, Cloe deve mostrar destinatário, assunto e conteúd
 
 A arquitetura deve permitir incluir novas ações sem misturar a interface de conversa com a lógica de cada integração. Calendário, lembretes e outras tarefas poderão ser avaliados depois que o fluxo inicial estiver confiável.
 
+## Documentação adicional
+
+- [Arquitetura e fluxo de envio](docs/arquitetura.md)
+- [Plano de implementação](docs/plano-de-implementacao.md)
+
 ## Arquitetura proposta
 
 ```mermaid
