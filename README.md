@@ -1,27 +1,74 @@
 # MX
 
-> Documentação de planejamento para um harness local, simples e de uso pessoal.
+**Harness local em Python para executar e acompanhar verificações de projetos pessoais.**
 
-Este repositório registra o escopo, os diagramas e o plano de construção do **MX**. O desenvolvimento será feito localmente, em Python, ao longo de dez dias. Por enquanto, este repositório contém apenas documentação: não há implementação pronta.
+O MX reúne tarefas de validação que normalmente são executadas uma por vez — como testes, análise estática e verificações locais — em uma única execução reproduzível. Ele registra o resultado de cada tarefa, mostra um resumo no terminal e salva um relatório para consulta posterior.
 
-## Objetivo
+O MX é pensado para uso individual na máquina de desenvolvimento. A configuração e os relatórios ficam em arquivos locais; não há serviço remoto para operar.
 
-Criar uma ferramenta local que organize e execute verificações repetíveis para projetos pessoais, reúna os resultados e facilite a identificação de falhas. O escopo final será confirmado no primeiro dia, antes de escrever código.
+## O que o MX deverá fazer
 
-## Documentos
+- Ler uma configuração com as verificações que compõem uma execução.
+- Validar essa configuração antes de iniciar qualquer tarefa.
+- Executar comandos locais em sequência, no diretório definido para cada um.
+- Aplicar um limite de tempo por tarefa e registrar código de saída, duração e saída do processo.
+- Diferenciar verificações aprovadas, reprovadas, interrompidas por tempo e não executadas.
+- Exibir um resumo no terminal e gerar um relatório JSON local.
+- Encerrar com um código de saída que permita usar o MX em scripts locais.
 
-- [Plano de 10 dias](docs/plano-10-dias.md)
-- [Diagrama de arquitetura](docs/diagramas/arquitetura.md)
-- [Fluxo de execução](docs/diagramas/fluxo-de-execucao.md)
+## Exemplo de uso planejado
 
-## Princípios
+Uma configuração poderá agrupar os comandos de validação de um projeto:
 
-- Uso local e individual.
-- Escopo pequeno, adequado a um projeto de poucos dias.
-- Configuração simples e resultados fáceis de entender.
-- Sem serviços em nuvem ou dependências externas no MVP.
-- Cada etapa deve terminar com uma entrega verificável.
+```toml
+[[checks]]
+name = "unit-tests"
+command = ["python", "-m", "unittest", "discover"]
+working_directory = "."
+timeout_seconds = 120
+expected_exit_code = 0
 
-## Estado
+[[checks]]
+name = "lint"
+command = ["ruff", "check", "."]
+working_directory = "."
+timeout_seconds = 60
+expected_exit_code = 0
+```
 
-**Planejamento.** O código será desenvolvido localmente durante os dez dias descritos no roadmap. Este repositório serve para documentar as decisões e o progresso.
+O fluxo de uso pretendido é:
+
+```text
+mx.toml → validação da configuração → execução das verificações → resumo + relatório JSON
+```
+
+A sintaxe final da configuração e do comando será definida durante a implementação. O exemplo ilustra o formato proposto, não uma funcionalidade já disponível.
+
+## Como será organizado
+
+```mermaid
+flowchart LR
+    Config[Arquivo de configuração] --> Validate[Validador]
+    Validate --> CLI[Interface de linha de comando]
+    CLI --> Runner[Executor local]
+    Runner --> Commands[Comandos do projeto]
+    Commands --> Results[Resultados e duração]
+    Results --> Terminal[Resumo no terminal]
+    Results --> JSON[Relatório JSON local]
+```
+
+- **Configuração:** descreve as verificações, seus diretórios, limites de tempo e resultados esperados.
+- **Validador:** identifica erros de configuração antes de executar comandos.
+- **Executor:** inicia cada comando sem depender de um shell por padrão, aplica limites de tempo e coleta os resultados.
+- **Relatório:** apresenta o estado geral e preserva detalhes por verificação em JSON.
+
+## Limites do escopo inicial
+
+- Execução local em uma única máquina.
+- Verificações baseadas em comandos de projetos existentes.
+- Execução sequencial e relatório local.
+- Sem interface web, banco de dados, painel remoto ou execução distribuída.
+
+## Estado do projeto
+
+**Em planejamento.** Este README descreve o comportamento desejado; o MX ainda precisa ser implementado. As decisões de configuração, execução e formato do relatório serão refinadas antes e durante o desenvolvimento.
