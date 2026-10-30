@@ -3,18 +3,22 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mx-harness"
+name = "cloe-agent"
 version = "0.1.0"
-description = "A lightweight, reproducible evaluation harness for GenAI applications"
+description = "Offline prototype for evaluating personal-assistant task flows"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
 mcp = ["mcp[cli]>=2,<3"]
+dev = ["pytest>=8,<9"]
 
 [project.scripts]
-mx-harness = "mx_harness.cli:main"
+cloe-agent = "cloe_agent.cli:main"
 
 [tool.setuptools]
-packages = ["mx_harness", "mcp_servers"]
+packages = ["cloe_agent", "mcp_servers"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

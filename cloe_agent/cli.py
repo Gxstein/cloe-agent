@@ -1,4 +1,4 @@
-"""Command-line interface for Mx Harness."""
+"""Offline command-line prototype for Cloe Agent task flows."""
 
 from __future__ import annotations
 
@@ -13,7 +13,10 @@ from .runner import report_dict, run_cases
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="mx-harness", description="Evaluate GenAI responses against cases.")
+    parser = argparse.ArgumentParser(
+        prog="cloe-agent",
+        description="Run offline examples for assistant task flows.",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
     run_parser = subparsers.add_parser("run", help="run a JSONL evaluation file")
     run_parser.add_argument("cases", type=Path, help="path to a JSONL case file")

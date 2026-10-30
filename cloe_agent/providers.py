@@ -1,4 +1,4 @@
-"""Provider contract and an offline demo implementation."""
+"""Response provider contract and a deterministic offline demo."""
 
 from typing import Protocol
 

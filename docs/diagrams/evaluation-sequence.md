@@ -11,7 +11,7 @@ sequenceDiagram
     participant Eval as Avaliadores
     participant Report as Relatório JSON
 
-    Dev->>CLI: mx-harness run scenario.jsonl
+    Dev->>CLI: cloe-agent run examples/cases.jsonl
     CLI->>Run: casos validados + configuração
     Run->>Model: instruções e entrada do caso
     Model-->>Run: resposta ou solicitação de ferramenta

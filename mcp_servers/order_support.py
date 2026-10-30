@@ -1,10 +1,10 @@
-"""Synthetic, read-only MCP tools for local order-support scenarios."""
+"""Synthetic, read-only MCP tools used only in the Cloe integration example."""
 
 from mcp.server import MCPServer
 from mcp.types import ToolAnnotations
 
 
-mcp = MCPServer("mx-order-support-demo")
+mcp = MCPServer("cloe-readonly-demo")
 
 ORDERS = {
     "demo-1001": {"status": "preparing", "eta_minutes": 18},

@@ -1,10 +1,31 @@
 # Cloe Agent
 
-**Assistente conversacional local para organizar tarefas pessoais com ferramentas.**
+**Protótipo local para avaliar fluxos de tarefas e ferramentas de um assistente pessoal.**
 
-Cloe Agent é um chatbot pensado para transformar pedidos escritos em ações práticas no computador. Em vez de apenas responder com instruções, Cloe poderá planejar uma tarefa, selecionar uma ferramenta permitida, executá-la e explicar o resultado na conversa.
+Cloe Agent é o projeto de um assistente conversacional local para organizar tarefas pessoais. O produto final deverá transformar pedidos em ações delimitadas, mostrar o que pretende fazer e explicar o resultado.
 
-A proposta começa com tarefas cotidianas e bem delimitadas: criar e organizar pastas, preparar e-mails, preparar mensagens e, quando houver integração configurada, enviá-los após a confirmação da pessoa usuária. Novas ações poderão ser adicionadas por ferramentas independentes.
+A proposta começa com tarefas cotidianas e bem delimitadas: criar pastas, preparar e-mails e mensagens e, depois de integrar um serviço, enviar conteúdo somente após confirmação.
+
+## Estado atual
+
+O código disponível ainda **não é um chatbot** e não integra um modelo de linguagem. Ele oferece uma CLI offline que lê casos JSONL, executa um provedor de eco determinístico e compara trechos esperados na resposta. Há também um exemplo MCP de leitura com dados sintéticos. A interface de conversa, as ações em pastas e as integrações de e-mail/mensagens ainda serão implementadas.
+
+O runner mede correspondência textual simples; isso não avalia qualidade semântica nem segurança de um modelo.
+
+## Executar o protótipo offline
+
+Requer Python 3.11 ou superior.
+
+```bash
+python -m venv .venv
+# Ative o ambiente virtual e instale o pacote:
+python -m pip install -e ".[dev]"
+cloe-agent run examples/cases.jsonl --output output/report.json
+```
+
+O provedor atual apenas repete o prompt como demonstração. Não há conexão com um modelo, interface de chat ou integração com e-mail.
+
+Execute os testes unitários com `python -m pytest`.
 
 ## Como uma tarefa funciona
 
@@ -16,7 +37,7 @@ A proposta começa com tarefas cotidianas e bem delimitadas: criar e organizar p
 
 Por exemplo, para um e-mail, Cloe deve mostrar destinatário, assunto e conteúdo antes de enviar. Uma instrução ambígua deve gerar uma pergunta de esclarecimento, não uma tentativa de adivinhar.
 
-## Capacidades planejadas
+## Escopo planejado
 
 ### Organização local
 
@@ -35,7 +56,7 @@ Por exemplo, para um e-mail, Cloe deve mostrar destinatário, assunto e conteúd
 
 A arquitetura deve permitir incluir novas ações sem misturar a interface de conversa com a lógica de cada integração. Calendário, lembretes e outras tarefas poderão ser avaliados depois que o fluxo inicial estiver confiável.
 
-## Documentação adicional
+## Documentação
 
 - [Arquitetura e fluxo de envio](docs/arquitetura.md)
 - [Plano de implementação](docs/plano-de-implementacao.md)
@@ -77,4 +98,4 @@ O primeiro recorte deve validar a conversa e a execução de poucas tarefas úte
 
 ## Estado do projeto
 
-**Em planejamento.** Este repositório registra a proposta, as decisões e os diagramas de Cloe Agent. A implementação ainda não está pronta; as capacidades descritas são objetivos do projeto.
+**Protótipo inicial.** A CLI offline e o exemplo MCP são executáveis. O chatbot e as integrações pessoais seguem como trabalho futuro.
